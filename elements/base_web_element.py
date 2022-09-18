@@ -9,7 +9,9 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support.wait import WebDriverWait
 
-logging.basicConfig(level=logging.DEBUG)
+from settings import LOGGING_LEVEL
+
+logging.basicConfig(level=LOGGING_LEVEL)
 DEFAULT_DISPLAYED_WAIT = 60  # seconds
 
 
@@ -29,7 +31,12 @@ class BaseWebElement:
 
     @property
     def parent(self) -> Union[WebDriver, WebElement]:
-        """Returns the parent as either a WebDriver or WebElement object."""
+        """Returns the parent as either a WebDriver or WebElement object.
+
+        Returns
+        -------
+        Union[WebDriver, WebElement]
+        """
         if isinstance(self._parent, BaseWebElement):
             return self._parent.find_element()
         return self._parent
@@ -43,8 +50,19 @@ class BaseWebElement:
             Controls whether the method first waits for the web element to be displayed.
             Defaults to True.
 
+        Returns
+        -------
+        WebElement
         """
         if self._web_element:
+            # pylint: disable=expression-not-assigned
+            wait_until_is_displayed and WebDriverWait(
+                self.parent, DEFAULT_DISPLAYED_WAIT
+            ).until(
+                method=lambda parent: self._web_element.is_displayed(),
+                message=f"Could not web element to be displayed. "
+                f"Tried for {DEFAULT_DISPLAYED_WAIT} seconds",
+            )
             return self._web_element
 
         if wait_until_is_displayed:
@@ -73,6 +91,11 @@ class BaseWebElement:
 
     @property
     def element_screenshot_as_base64(self) -> str:
-        """Returns a screenshot of the web element as a base64 encoded string."""
+        """Returns a screenshot of the web element as a base64 encoded string.
+
+        Returns
+        -------
+        str
+        """
         logging.info("Taking a screenshot of element with locator: %s.", self.locator)
         return self.find_element().screenshot_as_base64

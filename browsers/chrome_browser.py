@@ -10,8 +10,9 @@ from browsers.base_browser import (
     DEFAULT_WINDOW_WIDTH,
     BaseBrowser,
 )
+from settings import LOGGING_LEVEL
 
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=LOGGING_LEVEL)
 
 
 class ChromeOptionArguments(Enum):

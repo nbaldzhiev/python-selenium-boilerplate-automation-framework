@@ -3,9 +3,9 @@ import logging
 
 from selenium.webdriver.remote.webdriver import WebDriver
 
-logging.basicConfig(level=logging.DEBUG)
+from settings import LOGGING_LEVEL
 
-
+logging.basicConfig(level=LOGGING_LEVEL)
 DEFAULT_WINDOW_WIDTH = 1280
 DEFAULT_WINDOW_HEIGHT = 720
 

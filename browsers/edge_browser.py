@@ -6,8 +6,9 @@ from typing import Any, List, Optional, Tuple
 from selenium.webdriver import Edge, EdgeOptions
 
 from browsers.base_browser import BaseBrowser
+from settings import LOGGING_LEVEL
 
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=LOGGING_LEVEL)
 
 
 class EdgeOptionArguments(Enum):
