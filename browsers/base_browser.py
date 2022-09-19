@@ -3,7 +3,7 @@ import logging
 
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from settings import LOGGING_LEVEL
+from settings import LOGGING_LEVEL, set_global_driver
 
 logging.basicConfig(level=LOGGING_LEVEL)
 DEFAULT_WINDOW_WIDTH = 1280
@@ -16,6 +16,7 @@ class BaseBrowser:
 
     def __init__(self, driver: WebDriver):
         self.driver: WebDriver = driver
+        set_global_driver(driver=driver)
 
     def open_url(self, url: str):
         """Opens a url specified by url: str."""

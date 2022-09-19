@@ -27,7 +27,7 @@ class BaseWebElement:
     ):
         self._parent = parent
         self.locator = locator
-        self._web_element = web_element
+        self.web_element = web_element
 
     @property
     def parent(self) -> Union[WebDriver, WebElement]:
@@ -41,7 +41,9 @@ class BaseWebElement:
             return self._parent.find_element()
         return self._parent
 
-    def find_element(self, wait_until_is_displayed: bool = True) -> WebElement:
+    def find_element(
+        self, wait_until_is_displayed: bool = True, scroll_into_view: bool = True
+    ) -> WebElement:
         """Finds an element and returns it as a WebElement object.
 
         Parameters
@@ -49,21 +51,24 @@ class BaseWebElement:
         wait_until_is_displayed : bool
             Controls whether the method first waits for the web element to be displayed.
             Defaults to True.
+        scroll_into_view : bool
+            Controls whether the web element gets scrolled into view. Defaults to True.
 
         Returns
         -------
         WebElement
         """
-        if self._web_element:
+        if self.web_element:
             # pylint: disable=expression-not-assigned
             wait_until_is_displayed and WebDriverWait(
                 self.parent, DEFAULT_DISPLAYED_WAIT
             ).until(
-                method=lambda parent: self._web_element.is_displayed(),
+                method=lambda parent: self.web_element.is_displayed(),
                 message=f"Could not web element to be displayed. "
                 f"Tried for {DEFAULT_DISPLAYED_WAIT} seconds",
             )
-            return self._web_element
+            scroll_into_view and self.web_element.location_once_scrolled_into_view
+            return self.web_element
 
         if wait_until_is_displayed:
             logging.info(
@@ -77,8 +82,9 @@ class BaseWebElement:
             )
 
         logging.info("Got element with locator: %s.", self.locator)
-        self._web_element = self.parent.find_element(*self.locator)
-        return self._web_element
+        self.web_element = self.parent.find_element(*self.locator)
+        scroll_into_view and self.web_element.location_once_scrolled_into_view
+        return self.web_element
 
     def get_attribute_value(self, attribute_name: str):
         """Returns the value of the tag's attribute specified by attribute_name: str."""
@@ -99,3 +105,12 @@ class BaseWebElement:
         """
         logging.info("Taking a screenshot of element with locator: %s.", self.locator)
         return self.find_element().screenshot_as_base64
+
+    def is_enabled(self) -> bool:
+        """Determines whether the web element is enabled or not.
+
+        Returns
+        -------
+        bool
+        """
+        return self.find_element().is_enabled()
