@@ -41,9 +41,7 @@ class BaseWebElement:
             return self._parent.find_element()
         return self._parent
 
-    def find_element(
-        self, wait_until_is_displayed: bool = True, scroll_into_view: bool = True
-    ) -> WebElement:
+    def find_element(self, wait_until_is_displayed: bool = True) -> WebElement:
         """Finds an element and returns it as a WebElement object.
 
         Parameters
@@ -51,8 +49,6 @@ class BaseWebElement:
         wait_until_is_displayed : bool
             Controls whether the method first waits for the web element to be displayed.
             Defaults to True.
-        scroll_into_view : bool
-            Controls whether the web element gets scrolled into view. Defaults to True.
 
         Returns
         -------
@@ -67,7 +63,6 @@ class BaseWebElement:
                 message=f"Could not web element to be displayed. "
                 f"Tried for {DEFAULT_DISPLAYED_WAIT} seconds",
             )
-            scroll_into_view and self.web_element.location_once_scrolled_into_view
             return self.web_element
 
         if wait_until_is_displayed:
@@ -83,7 +78,6 @@ class BaseWebElement:
 
         logging.info("Got element with locator: %s.", self.locator)
         self.web_element = self.parent.find_element(*self.locator)
-        scroll_into_view and self.web_element.location_once_scrolled_into_view
         return self.web_element
 
     def get_attribute_value(self, attribute_name: str):

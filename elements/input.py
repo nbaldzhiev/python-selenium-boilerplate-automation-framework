@@ -1,4 +1,4 @@
-"""This module contains an implementation of a input type of element in a given UI."""
+"""This module contains an implementation of an input type of element in a given UI."""
 from __future__ import annotations
 
 import logging
@@ -21,7 +21,7 @@ class Input(BaseWebElement):
 
     # A default CSS selector to allow for a simpler interface where the user only passes the
     # parent element. Set the value to a common selector for input elements in your project
-    DEFAULT_CSS_SELECTOR = 'input[id="inlineUserEmail"]'
+    DEFAULT_CSS_SELECTOR = "input"
 
     def __init__(
         self,

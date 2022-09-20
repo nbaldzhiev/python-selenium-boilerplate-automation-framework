@@ -26,6 +26,7 @@ class Collection:
         self._parent = parent
         self.children_locator = children_locator
         self.children_cls = children_cls
+        self.web_elements: List = []
 
     @property
     def parent(self) -> Union[WebDriver, WebElement]:
@@ -51,6 +52,6 @@ class Collection:
             self.children_cls(web_element=elem)
             for elem in self.parent.find_elements(*self.children_locator)
         ]
-        logging.info('Got a Collection with the following elements: %s', cls_elements)
+        logging.info("Got a Collection with the following elements: %s", cls_elements)
+        self.web_elements = cls_elements
         return cls_elements
-
