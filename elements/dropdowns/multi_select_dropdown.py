@@ -111,6 +111,7 @@ class MultiSelectDropdown(BaseDropdown):
             # where the selected options become a comma-separated string value of the dropdown
             if option.lower() in self.text.lower().split(", "):
                 return
+
             self.expand_dropdown()
             filtered = list(
                 filter(
@@ -122,6 +123,7 @@ class MultiSelectDropdown(BaseDropdown):
                 raise UserWarning(
                     f"The option {option} was not found in dropdown with locator: {self.locator}"
                 )
+
             filtered[0].click()
             logging.info(
                 "Selected option: %s, for multi-select dropdown with locator: %s",

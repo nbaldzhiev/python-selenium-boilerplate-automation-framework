@@ -90,6 +90,7 @@ class SingleSelectDropdown(BaseDropdown):
         # Do nothing if the currently selected option is the one received as an argument
         if self.text.lower() == option_value.lower():
             return
+
         option = list(
             filter(
                 lambda opt: opt.text.lower() == option_value.lower(),
@@ -98,6 +99,7 @@ class SingleSelectDropdown(BaseDropdown):
         )
         if not len(option):
             raise UserWarning(f"The option with value: {option_value}, was not found!")
+
         option[0].click()
         logging.info(
             "Selected option: %s, of dropdown with locator: %s.",

@@ -113,6 +113,7 @@ class BaseExpandedDropdown(BaseWebElement):
                 children_locator=self.options_locator,
             ).find_elements()
             filtered = list(filter(lambda opt: not opt.text, options))
+
             if not options or filtered:
                 time.sleep(type(self).OPTIONS_VALUES_INTERVAL)
             else:
