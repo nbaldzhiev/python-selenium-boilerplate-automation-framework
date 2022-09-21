@@ -16,7 +16,7 @@ class BaseBrowser:
 
     def __init__(self, driver: WebDriver):
         self.driver: WebDriver = driver
-        set_global_driver(driver=driver)
+        set_global_driver(driver=self.driver)
 
     def open_url(self, url: str):
         """Opens a url specified by url: str."""

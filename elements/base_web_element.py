@@ -4,6 +4,7 @@ from __future__ import annotations
 import logging
 from typing import Optional, Tuple, Union
 
+from selenium.common.exceptions import StaleElementReferenceException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.remote.webelement import WebElement
@@ -41,13 +42,13 @@ class BaseWebElement:
             return self._parent.find_element()
         return self._parent
 
-    def find_element(self, wait_until_is_displayed: bool = True) -> WebElement:
+    def find_element(self, wait_until_is_present: bool = True) -> WebElement:
         """Finds an element and returns it as a WebElement object.
 
         Parameters
         ----------
-        wait_until_is_displayed : bool
-            Controls whether the method first waits for the web element to be displayed.
+        wait_until_is_present : bool
+            Controls whether the method first waits for the web element to be present.
             Defaults to True.
 
         Returns
@@ -55,25 +56,27 @@ class BaseWebElement:
         WebElement
         """
         if self.web_element:
-            # pylint: disable=expression-not-assigned
-            wait_until_is_displayed and WebDriverWait(
-                self.parent, DEFAULT_DISPLAYED_WAIT
-            ).until(
-                method=lambda parent: self.web_element.is_displayed(),
-                message=f"Could not web element to be displayed. "
-                f"Tried for {DEFAULT_DISPLAYED_WAIT} seconds",
-            )
-            return self.web_element
+            # Check if the element is stale first before returning it
+            try:
+                _ = self.web_element.location
+            except StaleElementReferenceException as exc:
+                if not self.locator:
+                    raise UserWarning(
+                        "The web element is stale and a locator was not provided, "
+                        "hence it is not possible to find it!"
+                    ) from exc
+            else:
+                return self.web_element
 
-        if wait_until_is_displayed:
+        if wait_until_is_present:
             logging.info(
-                "Starting to wait for element with locator %s to be displayed",
+                "Starting to wait for element with locator %s to be present",
                 self.locator,
             )
             WebDriverWait(self.parent, DEFAULT_DISPLAYED_WAIT).until(
-                method=lambda parent: parent.find_element(*self.locator).is_displayed(),
+                method=lambda parent: parent.find_element(*self.locator),
                 message=f"Could not wait for the element with locator {self.locator} to be "
-                f"displayed! Tried for {DEFAULT_DISPLAYED_WAIT} seconds",
+                f"present! Tried for {DEFAULT_DISPLAYED_WAIT} seconds",
             )
 
         logging.info("Got element with locator: %s.", self.locator)
@@ -89,6 +92,15 @@ class BaseWebElement:
         self.find_element().click()
         logging.info("Clicked on element with locator: %s.", self.locator)
 
+    def is_enabled(self) -> bool:
+        """Determines whether the web element is enabled or not.
+
+        Returns
+        -------
+        bool
+        """
+        return self.find_element().is_enabled()
+
     @property
     def element_screenshot_as_base64(self) -> str:
         """Returns a screenshot of the web element as a base64 encoded string.
@@ -100,11 +112,12 @@ class BaseWebElement:
         logging.info("Taking a screenshot of element with locator: %s.", self.locator)
         return self.find_element().screenshot_as_base64
 
-    def is_enabled(self) -> bool:
-        """Determines whether the web element is enabled or not.
+    @property
+    def text(self) -> str:
+        """The text of the web element.
 
         Returns
         -------
-        bool
+        str
         """
-        return self.find_element().is_enabled()
+        return self.find_element().text

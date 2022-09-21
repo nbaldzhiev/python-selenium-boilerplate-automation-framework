@@ -11,7 +11,7 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.remote.webelement import WebElement
 
 from elements.base_web_element import BaseWebElement
-from settings import GLOBAL_DRIVER, LOGGING_LEVEL
+from settings import LOGGING_LEVEL
 
 logging.basicConfig(level=LOGGING_LEVEL)
 
@@ -19,23 +19,17 @@ logging.basicConfig(level=LOGGING_LEVEL)
 class Input(BaseWebElement):
     """This class implements an abstraction of an input type of element in a UI."""
 
-    # A default CSS selector to allow for a simpler interface where the user only passes the
+    # A default locator to allow for a simpler interface where the user only passes the
     # parent element. Set the value to a common selector for input elements in your project
-    DEFAULT_CSS_SELECTOR = "input"
+    DEFAULT_SELECTOR = (By.CSS_SELECTOR, "input")
 
     def __init__(
         self,
         parent: Optional[Union[BaseWebElement, WebElement, WebDriver]] = None,
-        locator: Optional[Tuple[By, str]] = None,
+        locator: Tuple[By, str] = DEFAULT_SELECTOR,
         web_element: Optional[WebElement] = None,
     ):
-        if not (locator or web_element):
-            super().__init__(
-                parent=parent,
-                locator=(By.CSS_SELECTOR, type(self).DEFAULT_CSS_SELECTOR),
-            )
-        else:
-            super().__init__(parent=parent, locator=locator, web_element=web_element)
+        super().__init__(parent=parent, locator=locator, web_element=web_element)
 
     def clear_input(self) -> Input:
         """Clears the input of any characters currently typed in. The method clears the input
@@ -47,6 +41,8 @@ class Input(BaseWebElement):
         Input
             Returns the instance itself to allow for a fluent interface.
         """
+        from settings import GLOBAL_DRIVER
+
         ActionChains(GLOBAL_DRIVER).double_click(
             on_element=self.find_element()
         ).click().perform()

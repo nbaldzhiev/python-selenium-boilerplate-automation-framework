@@ -156,6 +156,10 @@ disable=raw-checker-failed,
         use-symbolic-message-instead,
         expression-not-assigned,
         pointless-statement,
+        import-outside-toplevel,
+        too-many-arguments,
+        use-implicit-booleaness-not-len,
+        cell-var-from-loop
 
 # Enable the message, report, category or checker with the given id(s). You can
 # either give multiple identifier separated by comma (,) or put this option

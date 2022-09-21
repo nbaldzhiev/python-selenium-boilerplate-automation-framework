@@ -1,14 +1,15 @@
 """Contains common settings across the project."""
 from logging import INFO
+from typing import Optional
 
 from selenium.webdriver.remote.webdriver import WebDriver
 
 LOGGING_LEVEL = INFO
-GLOBAL_DRIVER: WebDriver
+GLOBAL_DRIVER: Optional[WebDriver] = None
 
 
 def set_global_driver(driver: WebDriver):
-    """Sets the GLOBAL_DRIVER so it can be used cross-module.
+    """Sets the GLOBAL_DRIVER, so it can be used cross-module.
 
     Parameters
     ----------

@@ -17,24 +17,17 @@ logging.basicConfig(level=LOGGING_LEVEL)
 class Checkbox(BaseWebElement):
     """This class implements an abstraction of a checkbox type of element in a UI."""
 
-    # A default CSS selector to allow for a simpler interface where the user only passes the
+    # A default locator to allow for a simpler interface where the user only passes the
     # parent element. Set the value to a common selector for checkbox elements in your project
-    DEFAULT_CSS_SELECTOR = 'label> input[type="checkbox"]'
+    DEFAULT_LOCATOR = (By.CSS_SELECTOR, 'input[type="checkbox"]')
 
     def __init__(
         self,
         parent: Optional[Union[BaseWebElement, WebElement, WebDriver]] = None,
-        locator: Optional[Tuple[By, str]] = None,
+        locator: Tuple[By, str] = DEFAULT_LOCATOR,
         web_element: Optional[WebElement] = None,
     ):
-        # pylint: disable=duplicate-code
-        if not (locator or web_element):
-            super().__init__(
-                parent=parent,
-                locator=(By.CSS_SELECTOR, type(self).DEFAULT_CSS_SELECTOR),
-            )
-        else:
-            super().__init__(parent=parent, locator=locator, web_element=web_element)
+        super().__init__(parent=parent, locator=locator, web_element=web_element)
 
     def is_checked(self) -> bool:
         """Determines whether the checkbox is checked or not
