@@ -11,7 +11,9 @@ parts of a UI framework with Selenium:
   - `Checkbox`;
   - `Dropdown` - single-select and multi-select;
   - `Table`;
-  - `Collection` - a collection of elements with a common locator.
+  - `Collection` - a collection of elements with a common locator;
+  - `Link`;
+  - `Button`.
 
 The idea is to make it easier for a given team to bootstrap its UI test automation effort. The framework aims to be generic enough and can be adjusted according to a specific product under test.
 
