@@ -21,12 +21,12 @@ class Input(BaseWebElement):
 
     # A default locator to allow for a simpler interface where the user only passes the
     # parent element. Set the value to a common selector for input elements in your project
-    DEFAULT_SELECTOR = (By.CSS_SELECTOR, "input")
+    DEFAULT_LOCATOR = (By.CSS_SELECTOR, "input")
 
     def __init__(
         self,
         parent: Optional[Union[BaseWebElement, WebElement, WebDriver]] = None,
-        locator: Tuple[By, str] = DEFAULT_SELECTOR,
+        locator: Tuple[By, str] = DEFAULT_LOCATOR,
         web_element: Optional[WebElement] = None,
     ):
         super().__init__(parent=parent, locator=locator, web_element=web_element)
