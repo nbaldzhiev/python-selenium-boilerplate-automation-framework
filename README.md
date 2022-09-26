@@ -3,15 +3,15 @@
 The repository contains a boilerplate project for a core Selenium framework with Python. "Core" would mean that the project supports the most fundamental 
 parts of a UI framework with Selenium:
 * cross-browser support:
-- Chrome;
-- Firefox;
-- Edge.
+  - Chrome;
+  - Firefox;
+  - Edge.
 * various UI elements support:
-- `Input`;
-- `Checkbox`;
-- `Dropdown` - single-select and multi-select;
-- `Table`;
-- `Collection` - a collection of elements with a common locator.
+  - `Input`;
+  - `Checkbox`;
+  - `Dropdown` - single-select and multi-select;
+  - `Table`;
+  - `Collection` - a collection of elements with a common locator.
 
 The idea is to make it easier for a given team to bootstrap its UI test automation effort. The framework aims to be generic enough and can be adjusted according to a specific product under test.
 
