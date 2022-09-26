@@ -15,7 +15,19 @@ logging.basicConfig(level=LOGGING_LEVEL)
 
 class Collection:
     """This class implements a Collection, which represents multiple elements with a common
-    locator situated under a given parent."""
+    locator situated under a given parent.
+
+    Examples
+    --------
+        row_data_cells = Collection(
+            parent=row, children_locator=(By.CSS_SELECTOR, "td")
+        )
+        checkboxes = Collection(
+            parent=browser.driver,
+            children_locator=(By.CSS_SELECTOR, 'input[type="checkbox"]',
+            children_cls=Input,
+        )
+    """
 
     def __init__(
         self,

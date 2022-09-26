@@ -138,13 +138,16 @@ class Table(BaseWebElement):
             The column as TableColumn object.
         """
         try:
-            return list(
+            col = list(
                 filter(
                     lambda col: col.column_title.lower() == column_title.lower(),
                     self.columns,
                 )
             )[0]
+            logging.info("Got table column with title: %s.", column_title)
         except IndexError as exc:
             raise IndexError(
                 f"A column with title {column_title} was not found!"
             ) from exc
+        else:
+            return col

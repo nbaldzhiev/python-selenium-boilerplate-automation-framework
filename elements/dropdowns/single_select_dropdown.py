@@ -35,7 +35,16 @@ class SingleSelectExpandedDropdown(BaseExpandedDropdown):
 
 
 class SingleSelectDropdown(BaseDropdown):
-    """This class implements an abstraction of a single-select dropdown."""
+    """This class implements an abstraction of a single-select dropdown.
+
+    Examples
+    --------
+        single_dropdown = SingleSelectDropdown(parent=some_element)
+        single_dropdown = SingleSelectDropdown(
+            parent=browser.driver,
+            locator=(By.CSS_SELECTOR, 'button[class*="dropdown"][aria-label*="Jobs"]'),
+        )
+    """
 
     # A default CSS selector to allow for a simpler interface where the user only passes the
     # parent element. Set the value to a common selector for dropdown elements in your project

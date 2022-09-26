@@ -51,7 +51,16 @@ class MultiSelectExpandedDropdown(BaseExpandedDropdown):
 
 
 class MultiSelectDropdown(BaseDropdown):
-    """This class implements an abstraction of a multi-select dropdown."""
+    """This class implements an abstraction of a multi-select dropdown.
+
+    Examples
+    --------
+        multi_dropdown = MultiSelectDropdown(parent=some_element)
+        multi_dropdown = MultiSelectDropdown(
+            parent=x.driver,
+            locator=(By.CSS_SELECTOR, 'button[class*="dropdown"][aria-label*="Current company"]',
+        )
+    """
 
     # Default locators to allow for a simpler interface where the user only passes the
     # parent element. Set the value to a common selector for dropdown elements in your project

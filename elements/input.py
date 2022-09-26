@@ -17,7 +17,13 @@ logging.basicConfig(level=LOGGING_LEVEL)
 
 
 class Input(BaseWebElement):
-    """This class implements an abstraction of an input type of element in a UI."""
+    """This class implements an abstraction of an input type of element in a UI.
+
+    Examples
+    --------
+        input = Input(parent=some_browser.driver)
+        input = Input(parent=some_element, locator=(By.CSS_LOCATOR, 'input[class^="enabled"]'))
+    """
 
     # A default locator to allow for a simpler interface where the user only passes the
     # parent element. Set the value to a common selector for input elements in your project

@@ -15,7 +15,13 @@ logging.basicConfig(level=LOGGING_LEVEL)
 
 
 class Checkbox(BaseWebElement):
-    """This class implements an abstraction of a checkbox type of element in a UI."""
+    """This class implements an abstraction of a checkbox type of element in a UI.
+
+    Examples
+    --------
+        checkbox = Checkbox(parent=some_browser.driver)
+        checkbox = Checkbox(parent=some_element, locator=(By.CSS_LOCATOR, 'input[class^="enable"]'))
+    """
 
     # A default locator to allow for a simpler interface where the user only passes the
     # parent element. Set the value to a common selector for checkbox elements in your project

@@ -12,7 +12,13 @@ logging.basicConfig(level=LOGGING_LEVEL)
 
 
 class EdgeOptionArguments(Enum):
-    """Contains constants for option arguments available for Edge."""
+    """Contains constants for option arguments available for Edge.
+
+    Examples
+    --------
+        browser = EdgeBrowser()
+        browser = EdgeBrowser(options_args=[(EdgeOptionArguments.HEADLESS, )])
+    """
 
     # TODO: Find out and add the window size argument values
     HEADLESS = "headless"

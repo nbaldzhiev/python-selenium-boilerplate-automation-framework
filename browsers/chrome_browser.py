@@ -23,7 +23,16 @@ class ChromeOptionArguments(Enum):
 
 
 class ChromeBrowser(BaseBrowser):
-    """This class implements a Chrome browser."""
+    """This class implements a Chrome browser.
+
+    Examples
+    --------
+        browser = ChromeBrowser()
+        browser = ChromeBrowser(option_args[(ChromeOptionArguments.WINDOW_SIZE, '640,480')])
+        browser = ChromeBrowser(
+            [(ChromeOptionArguments.HEADLESS, ), (ChromeOptionArguments.WINDOW_SIZE, '640,480')]
+        )
+    """
 
     def __init__(
         self,

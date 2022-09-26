@@ -15,7 +15,19 @@ logging.basicConfig(level=logging.DEBUG)
 
 
 class FirefoxOptionArguments(Enum):
-    """Contains constants for option arguments available for Firefox."""
+    """Contains constants for option arguments available for Firefox.
+
+    Examples
+    --------
+        browser = FirefoxBrowser()
+        browser = FirefoxBrowser(
+            option_args=[
+                (FirefoxOptionArguments.WIDTH, '640'),
+                (FirefoxOptionArguments.HEIGHT, '480'),
+                (FirefoxOptionArguments.HEADLESS, ),
+            ]
+        )
+    """
 
     WIDTH = "width"
     HEIGHT = "height"
